@@ -3,7 +3,7 @@ const WHATSAPP_URL =
 
 const products = [
   {
-    name: "Wrap Pollo Clasico",
+    name: "Wrap Pollo Clásico",
     tag: "Best seller",
     tagColor: "bg-green-600",
     description:
@@ -19,7 +19,7 @@ const products = [
     tag: "Keto",
     tagColor: "bg-orange-500",
     description:
-      "Tortilla low-carb, pechuga, palta, queso cheddar, rucula y mayo de ajo.",
+      "Tortilla low-carb, pechuga, palta, queso cheddar, rúcula y mayo de ajo.",
     kcal: 340,
     protein: 34,
     carbs: 8,
@@ -28,7 +28,7 @@ const products = [
   },
   {
     name: "Wrap Veggie Hummus",
-    tag: "100% Vegano",
+    tag: "Veggie",
     tagColor: "bg-green-500",
     description:
       "Hummus casero, zanahoria rallada, pepino, mix de hojas verdes y semillas.",
@@ -39,11 +39,11 @@ const products = [
     weight: "260g",
   },
   {
-    name: "Sandwich Atun & Palta",
+    name: "Sándwich Atún & Palta",
     tag: "Omega-3",
     tagColor: "bg-blue-500",
     description:
-      "Pan integral, atun al natural, palta pisada, tomate, rucula y limon.",
+      "Pan integral, atún al natural, palta pisada, tomate, rúcula y limón.",
     kcal: 340,
     protein: 24,
     carbs: 28,
@@ -55,7 +55,7 @@ const products = [
     tag: "High Protein",
     tagColor: "bg-amber-600",
     description:
-      "Arroz yamani, pechuga grillada, edamame/choclo, zanahoria, aderezo de soja-jengibre.",
+      "Arroz yamaní, pechuga grillada, edamame/choclo, zanahoria, aderezo de soja-jengibre.",
     kcal: 430,
     protein: 36,
     carbs: 42,
@@ -67,8 +67,8 @@ const products = [
 const steps = [
   {
     emoji: "1",
-    title: "Elegis",
-    desc: "Mirá el menu del día y elegí tu vianda por WhatsApp.",
+    title: "Elegís",
+    desc: "Mirá el menú del día y elegí tu vianda por WhatsApp.",
   },
   {
     emoji: "2",
@@ -87,7 +87,7 @@ const roadmap = [
     phase: "Fase 1 — Lanzamiento",
     time: "Mes 1-2",
     items: [
-      "Menu fijo de 5 productos",
+      "Menú fijo de 5 productos",
       "Delivery en zona Las Mil Viviendas + centro",
       "Pedidos por WhatsApp",
       "Packaging eco con branding",
@@ -99,7 +99,7 @@ const roadmap = [
     items: [
       "Alianzas con 3-5 gimnasios",
       "Plan semanal con descuento",
-      "Rotacion de 2 especiales por semana",
+      "Rotación de 2 especiales por semana",
       "Presencia en Instagram con fotos reales",
     ],
   },
@@ -109,13 +109,62 @@ const roadmap = [
     items: [
       "Viandas corporativas para empresas",
       "Sistema de pedidos online",
-      "Expansion de zona de delivery",
+      "Expansión de zona de delivery",
       "Programa de referidos",
     ],
   },
 ];
 
+const investmentData = {
+  initial: [
+    { item: "Ingredientes iniciales (stock semana 1-2)", cost: 80000 },
+    { item: "Packaging y etiquetas (500 unidades)", cost: 60000 },
+    { item: "Contenedores, utensilios y descartables", cost: 45000 },
+    { item: "Branding (logo impreso, stickers, tarjetas)", cost: 30000 },
+    { item: "Delivery (combustible + bolsa térmica)", cost: 25000 },
+    { item: "Marketing inicial (Instagram ads + flyers)", cost: 20000 },
+  ],
+  phases: [
+    {
+      name: "Fase 1 — Lanzamiento",
+      time: "Mes 1-2",
+      ventasDia: 15,
+      precioUnit: 4500,
+      costoUnit: 1800,
+      diasMes: 22,
+      otrosGastos: 40000,
+    },
+    {
+      name: "Fase 2 — Crecimiento",
+      time: "Mes 3-4",
+      ventasDia: 30,
+      precioUnit: 4500,
+      costoUnit: 1600,
+      diasMes: 22,
+      otrosGastos: 55000,
+    },
+    {
+      name: "Fase 3 — Escala",
+      time: "Mes 5-6",
+      ventasDia: 50,
+      precioUnit: 4500,
+      costoUnit: 1500,
+      diasMes: 22,
+      otrosGastos: 75000,
+    },
+  ],
+};
+
+function formatMoney(n: number) {
+  return "$" + n.toLocaleString("es-AR");
+}
+
 export default function Home() {
+  const totalInversion = investmentData.initial.reduce(
+    (acc, i) => acc + i.cost,
+    0
+  );
+
   return (
     <div className="min-h-screen">
       {/* ── NAV ── */}
@@ -126,19 +175,25 @@ export default function Home() {
           </span>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-bark-light">
             <a href="#menu" className="hover:text-green-700 transition-colors">
-              Menu
+              Menú
             </a>
             <a
               href="#como-funciona"
               className="hover:text-green-700 transition-colors"
             >
-              Como funciona
+              Cómo funciona
             </a>
             <a
               href="#empresas"
               className="hover:text-green-700 transition-colors"
             >
               Empresas
+            </a>
+            <a
+              href="#numeros"
+              className="hover:text-green-700 transition-colors"
+            >
+              Números
             </a>
             <a
               href="#roadmap"
@@ -166,12 +221,12 @@ export default function Home() {
             Viandas saludables en Corrientes
           </span>
           <h1 className="font-display text-5xl md:text-7xl font-bold text-bark leading-tight mb-6">
-            Come bien,
+            Comé bien,
             <br />
-            <span className="text-green-700">come fresco.</span>
+            <span className="text-green-700">comé fresco.</span>
           </h1>
           <p className="text-lg md:text-xl text-bark-light max-w-2xl mx-auto mb-10">
-            Wraps, sandwiches y bowls hechos en el dia con ingredientes reales.
+            Wraps, sándwiches y bowls hechos en el día con ingredientes reales.
             Con info nutricional, sin vueltas. Delivery en Corrientes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -194,17 +249,17 @@ export default function Home() {
               href="#menu"
               className="inline-flex items-center justify-center text-bark font-semibold text-lg px-8 py-4 rounded-full border-2 border-green-200 hover:border-green-400 hover:bg-green-50 transition-colors"
             >
-              Ver menu
+              Ver menú
             </a>
           </div>
           {/* Quick nutrition badges */}
           <div className="flex flex-wrap justify-center gap-3 mt-12">
             {[
               "Opciones Keto",
-              "100% Vegano",
+              "Opciones Veggie",
               "High Protein",
               "Sin conservantes",
-              "Hecho en el dia",
+              "Hecho en el día",
             ].map((b) => (
               <span
                 key={b}
@@ -217,17 +272,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── MENU / PRODUCTOS ── */}
+      {/* ── MENÚ / PRODUCTOS ── */}
       <section id="menu" className="py-20 md:py-28 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-bark mb-4">
-              Nuestro menu
+              Nuestro menú
             </h2>
             <p className="text-bark-light max-w-xl mx-auto">
               5 opciones pensadas para que comas rico, sano y sin complicarte.
               Cada vianda tiene su info nutricional para que sepas exactamente
-              que estas comiendo.
+              qué estás comiendo.
             </p>
           </div>
 
@@ -242,7 +297,7 @@ export default function Home() {
                   <span className="text-5xl opacity-60 group-hover:scale-110 transition-transform">
                     {p.name.includes("Bowl")
                       ? "🥗"
-                      : p.name.includes("Sandwich")
+                      : p.name.includes("Sándwich")
                         ? "🥪"
                         : "🌯"}
                   </span>
@@ -308,7 +363,7 @@ export default function Home() {
             <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-2xl p-6 flex flex-col items-center justify-center text-center text-white">
               <div className="text-4xl mb-4">🚀</div>
               <h3 className="font-display text-xl font-bold mb-2">
-                Proximamente
+                Próximamente
               </h3>
               <p className="text-green-100 text-sm mb-6">
                 Especiales rotativos cada semana. Nuevas opciones, misma calidad
@@ -327,11 +382,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── COMO FUNCIONA ── */}
+      {/* ── CÓMO FUNCIONA ── */}
       <section id="como-funciona" className="py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-bark text-center mb-14">
-            Como funciona
+            Cómo funciona
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {steps.map((s) => (
@@ -363,15 +418,15 @@ export default function Home() {
               <p className="text-bark-light mb-6">
                 Ofrecemos planes semanales con descuento para gimnasios,
                 oficinas, estudios y cualquier espacio que quiera sumar una
-                opcion saludable para su gente.
+                opción saludable para su gente.
               </p>
               <ul className="space-y-3 text-bark-light mb-8">
                 {[
                   "Precios especiales por volumen",
                   "Delivery coordinado en un solo horario",
-                  "Menu adaptable a necesidades del grupo",
+                  "Menú adaptable a necesidades del grupo",
                   "Packaging con tu marca (co-branding)",
-                  "Sin compromiso minimo de duracion",
+                  "Sin compromiso mínimo de duración",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <svg
@@ -406,7 +461,7 @@ export default function Home() {
                 Partnership Gym
               </h3>
               <p className="text-bark-light text-sm mb-6">
-                Tus alumnos comen bien, vos ofreces un diferencial. Nosotros nos
+                Tus alumnos comen bien, vos ofrecés un diferencial. Nosotros nos
                 encargamos de todo.
               </p>
               <div className="grid grid-cols-3 gap-4 text-center">
@@ -416,7 +471,7 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-green-700">5+</div>
-                  <div className="text-xs text-bark-light">Viandas/dia</div>
+                  <div className="text-xs text-bark-light">Viandas/día</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-green-700">0</div>
@@ -428,18 +483,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── POR QUE FRESCO ── */}
+      {/* ── POR QUÉ FRESCO ── */}
       <section className="py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-bark text-center mb-14">
-            Por que FRESCO
+            Por qué FRESCO
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 icon: "🥬",
                 title: "Ingredientes reales",
-                desc: "Nada ultraprocesado. Todo fresco, todo del dia.",
+                desc: "Nada ultraprocesado. Todo fresco, todo del día.",
               },
               {
                 icon: "📊",
@@ -448,8 +503,8 @@ export default function Home() {
               },
               {
                 icon: "⚡",
-                title: "Practico",
-                desc: "Pedis, te llega, comes. Sin cocinar, sin lavar.",
+                title: "Práctico",
+                desc: "Pedís, te llega, comés. Sin cocinar, sin lavar.",
               },
               {
                 icon: "💰",
@@ -472,7 +527,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── NUMEROS ── */}
+      {/* ── LA OPORTUNIDAD ── */}
       <section className="py-20 md:py-28 bg-bark text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
@@ -480,7 +535,7 @@ export default function Home() {
           </h2>
           <p className="text-cream-dark/80 mb-14 max-w-xl mx-auto">
             Corrientes no tiene una marca de viandas saludables con identidad.
-            Ese lugar esta vacante.
+            Ese lugar está vacante.
           </p>
           <div className="grid sm:grid-cols-3 gap-8">
             {[
@@ -490,11 +545,11 @@ export default function Home() {
               },
               {
                 num: "20+",
-                label: "Gimnasios sin opcion de viandas",
+                label: "Gimnasios sin opción de viandas",
               },
               {
-                num: "$3.500",
-                label: "Precio promedio por vianda",
+                num: "$4.500",
+                label: "Precio por vianda",
               },
             ].map((n) => (
               <div key={n.label}>
@@ -508,11 +563,160 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── INVERSIÓN Y NÚMEROS ── */}
+      <section id="numeros" className="py-20 md:py-28 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-bark mb-4">
+              Inversión y números
+            </h2>
+            <p className="text-bark-light max-w-xl mx-auto">
+              Desglose estimado para arrancar y proyección de ingresos por fase.
+              Todos los valores son aproximados y en pesos argentinos.
+            </p>
+          </div>
+
+          {/* Inversión inicial */}
+          <div className="bg-cream rounded-2xl border border-green-100 p-6 md:p-8 mb-8">
+            <h3 className="font-display text-xl font-bold text-bark mb-6 flex items-center gap-3">
+              <span className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                $
+              </span>
+              Inversión inicial estimada
+            </h3>
+            <div className="space-y-3">
+              {investmentData.initial.map((item) => (
+                <div
+                  key={item.item}
+                  className="flex items-center justify-between py-2 border-b border-green-50 last:border-0"
+                >
+                  <span className="text-sm text-bark-light">{item.item}</span>
+                  <span className="text-sm font-bold text-bark whitespace-nowrap ml-4">
+                    {formatMoney(item.cost)}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 pt-4 border-t-2 border-green-200 flex items-center justify-between">
+              <span className="font-display font-bold text-bark text-lg">
+                Total estimado
+              </span>
+              <span className="font-display font-bold text-green-700 text-2xl">
+                {formatMoney(totalInversion)}
+              </span>
+            </div>
+          </div>
+
+          {/* Proyección por fase */}
+          <h3 className="font-display text-xl font-bold text-bark mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+              📈
+            </span>
+            Proyección mensual por fase
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {investmentData.phases.map((phase) => {
+              const ingresosMes = phase.ventasDia * phase.precioUnit * phase.diasMes;
+              const costoProducto = phase.ventasDia * phase.costoUnit * phase.diasMes;
+              const gastosTotales = costoProducto + phase.otrosGastos;
+              const ganancia = ingresosMes - gastosTotales;
+              const margen = Math.round((ganancia / ingresosMes) * 100);
+
+              return (
+                <div
+                  key={phase.name}
+                  className="bg-cream rounded-2xl border border-green-100 p-6 hover:shadow-md hover:border-green-300 transition-all"
+                >
+                  <div className="mb-4">
+                    <h4 className="font-display font-bold text-bark">
+                      {phase.name}
+                    </h4>
+                    <span className="text-xs text-bark-light">{phase.time}</span>
+                  </div>
+
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-bark-light">Ventas/día</span>
+                      <span className="font-bold text-bark">
+                        {phase.ventasDia} viandas
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-bark-light">Precio unitario</span>
+                      <span className="font-bold text-bark">
+                        {formatMoney(phase.precioUnit)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-bark-light">Costo unitario</span>
+                      <span className="font-bold text-bark">
+                        {formatMoney(phase.costoUnit)}
+                      </span>
+                    </div>
+
+                    <div className="border-t border-green-100 pt-3">
+                      <div className="flex justify-between">
+                        <span className="text-bark-light">Ingreso mensual</span>
+                        <span className="font-bold text-green-700">
+                          {formatMoney(ingresosMes)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-bark-light">Costo producto</span>
+                        <span className="font-bold text-bark">
+                          {formatMoney(costoProducto)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-bark-light">
+                          Otros gastos
+                        </span>
+                        <span className="font-bold text-bark">
+                          {formatMoney(phase.otrosGastos)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="border-t-2 border-green-200 pt-3">
+                      <div className="flex justify-between items-center">
+                        <span className="font-display font-bold text-bark">
+                          Ganancia
+                        </span>
+                        <span
+                          className={`font-display font-bold text-lg ${ganancia >= 0 ? "text-green-700" : "text-red-500"}`}
+                        >
+                          {formatMoney(ganancia)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-bark-light text-xs">Margen</span>
+                        <span
+                          className={`text-xs font-bold px-2 py-0.5 rounded-full ${margen >= 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}
+                        >
+                          {margen}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Nota aclaratoria */}
+          <p className="text-xs text-bark-light mt-6 text-center">
+            * Valores estimados. &quot;Otros gastos&quot; incluye delivery,
+            packaging, marketing y gastos operativos. El costo unitario baja con
+            volumen por compra mayorista. Días hábiles: 22/mes.
+          </p>
+        </div>
+      </section>
+
       {/* ── ROADMAP ── */}
       <section id="roadmap" className="py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-bark text-center mb-14">
-            Proximos pasos
+            Próximos pasos
           </h2>
           <div className="space-y-8">
             {roadmap.map((r, i) => (
@@ -564,10 +768,10 @@ export default function Home() {
       <section className="py-20 md:py-28 bg-gradient-to-br from-green-600 to-green-700 text-white text-center">
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-6">
-            Empeza a comer mejor hoy
+            Empezá a comer mejor hoy
           </h2>
           <p className="text-green-100 text-lg mb-10 max-w-xl mx-auto">
-            Hacé tu pedido por WhatsApp y recibí tu vianda fresca en el dia.
+            Hacé tu pedido por WhatsApp y recibí tu vianda fresca en el día.
             Corrientes ya tiene su marca de viandas saludables.
           </p>
           <a
