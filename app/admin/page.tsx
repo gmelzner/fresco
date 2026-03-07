@@ -1,15 +1,21 @@
+import { Suspense } from "react";
 import { createSupabaseAdmin } from "@/lib/supabase";
-import { fmtCurrency, fmtNumber, fmtMonth, currentMonthRange, currentMonth } from "@/lib/formatters";
+import { fmtCurrency, fmtNumber, fmtMonth, fmtDate, resolveRange, monthFromDate } from "@/lib/formatters";
 import { StatCard } from "@/components/stat-card";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
+import { DateFilter } from "@/components/date-filter";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminOverview() {
+export default async function AdminOverview({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string; to?: string }>;
+}) {
+  const params = await searchParams;
+  const { start, end, isFiltered } = resolveRange(params);
   const sb = createSupabaseAdmin();
-  const { start, end } = currentMonthRange();
-  const month = currentMonth();
 
   // Fetch KPIs in parallel
   const [salesRes, cashflowRes, summaryRes, stockRes] = await Promise.all([
@@ -55,22 +61,30 @@ export default async function AdminOverview() {
     (s) => Number(s.current_stock) < Number(s.min_stock)
   );
 
+  const rangeLabel = isFiltered
+    ? `${fmtDate(start)} — ${fmtDate(end)}`
+    : fmtMonth(monthFromDate(start));
+
   return (
     <div>
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="font-display text-2xl md:text-3xl font-bold text-bark">
           Resumen
         </h1>
         <p className="text-sm text-bark-light mt-1">
-          {fmtMonth(month)} — datos en tiempo real desde Supabase
+          {rangeLabel} — datos en tiempo real desde Supabase
         </p>
       </div>
+
+      <Suspense fallback={null}>
+        <DateFilter />
+      </Suspense>
 
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
-          title="Ventas del mes"
+          title={isFiltered ? "Ventas" : "Ventas del mes"}
           value={fmtCurrency(totalSales)}
           icon="💰"
           accent
@@ -86,7 +100,7 @@ export default async function AdminOverview() {
           icon="🎫"
         />
         <StatCard
-          title="Saldo cashflow"
+          title={isFiltered ? "Saldo cashflow" : "Saldo cashflow"}
           value={fmtCurrency(saldo)}
           subtitle={`Ingresos: ${fmtCurrency(ingresos)} · Egresos: ${fmtCurrency(egresos)}`}
           icon="💸"
@@ -109,7 +123,7 @@ export default async function AdminOverview() {
                 <div>
                   <div className="text-sm font-medium text-bark">{s.item}</div>
                   <div className="text-xs text-bark-light">
-                    Mín: {s.min_stock} {s.unit}
+                    Min: {s.min_stock} {s.unit}
                   </div>
                 </div>
                 <div className="text-lg font-bold text-red-600">
@@ -133,7 +147,7 @@ export default async function AdminOverview() {
               { key: "total_sales", label: "Ventas", align: "right" },
               { key: "total_orders", label: "Pedidos", align: "right" },
               { key: "avg_ticket", label: "Ticket Prom.", align: "right" },
-              { key: "avg_daily_sales", label: "Venta/Día", align: "right" },
+              { key: "avg_daily_sales", label: "Venta/Dia", align: "right" },
             ]}
             data={summary}
             renderCell={(key, value) => {
@@ -144,8 +158,8 @@ export default async function AdminOverview() {
           />
         ) : (
           <EmptyState
-            title="Sin datos aún"
-            description="Cuando carguen ventas en el Google Sheet y se sincronice via n8n, el resumen mensual aparece acá automáticamente."
+            title="Sin datos aun"
+            description="Cuando carguen ventas en el Google Sheet y se sincronice via n8n, el resumen mensual aparece aca automaticamente."
           />
         )}
       </div>

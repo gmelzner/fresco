@@ -1,13 +1,20 @@
+import { Suspense } from "react";
 import { createSupabaseAdmin } from "@/lib/supabase";
-import { fmtCurrency, fmtDate, currentMonthRange, fmtMonth, currentMonth } from "@/lib/formatters";
+import { fmtCurrency, fmtDate, fmtMonth, resolveRange, monthFromDate } from "@/lib/formatters";
 import { DataTable } from "@/components/data-table";
 import { StatCard } from "@/components/stat-card";
+import { DateFilter } from "@/components/date-filter";
 
 export const dynamic = "force-dynamic";
 
-export default async function VentasPage() {
+export default async function VentasPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string; to?: string }>;
+}) {
+  const params = await searchParams;
+  const { start, end, isFiltered } = resolveRange(params);
   const sb = createSupabaseAdmin();
-  const { start, end } = currentMonthRange();
 
   const { data: sales } = await sb
     .from("fresco_daily_sales")
@@ -26,21 +33,29 @@ export default async function VentasPage() {
 
   const topProduct = Object.entries(byProduct).sort((a, b) => b[1] - a[1])[0];
 
+  const rangeLabel = isFiltered
+    ? `${fmtDate(start)} — ${fmtDate(end)}`
+    : fmtMonth(monthFromDate(start));
+
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="font-display text-2xl md:text-3xl font-bold text-bark">
           Ventas
         </h1>
-        <p className="text-sm text-bark-light mt-1">{fmtMonth(currentMonth())}</p>
+        <p className="text-sm text-bark-light mt-1">{rangeLabel}</p>
       </div>
+
+      <Suspense fallback={null}>
+        <DateFilter />
+      </Suspense>
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <StatCard title="Total vendido" value={fmtCurrency(total)} icon="💰" accent />
         <StatCard title="Pedidos" value={String(rows.length)} icon="📦" />
         {topProduct && (
           <StatCard
-            title="Más vendido"
+            title="Mas vendido"
             value={topProduct[0]}
             subtitle={`${topProduct[1]} unidades`}
             icon="🏆"
@@ -61,7 +76,7 @@ export default async function VentasPage() {
           ]}
           data={rows}
           emptyMessage="Sin ventas"
-          emptyDescription="Cargá ventas en el Google Sheet para verlas acá."
+          emptyDescription="Carga ventas en el Google Sheet para verlas aca."
           renderCell={(key, value) => {
             if (key === "date") return fmtDate(value as string);
             if (key === "unit_price" || key === "total")

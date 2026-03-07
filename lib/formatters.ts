@@ -61,3 +61,21 @@ export function currentMonthRange() {
   const end = new Date(y, m + 1, 0).toISOString().split("T")[0];
   return { start, end };
 }
+
+/** Parsea searchParams ?from=...&to=... o devuelve mes actual como fallback */
+export function resolveRange(params: { from?: string; to?: string }): {
+  start: string;
+  end: string;
+  isFiltered: boolean;
+} {
+  if (params.from && params.to) {
+    return { start: params.from, end: params.to, isFiltered: true };
+  }
+  const range = currentMonthRange();
+  return { ...range, isFiltered: false };
+}
+
+/** Extrae "YYYY-MM" de una fecha "YYYY-MM-DD" */
+export function monthFromDate(dateStr: string): string {
+  return dateStr.substring(0, 7);
+}

@@ -1,13 +1,20 @@
+import { Suspense } from "react";
 import { createSupabaseAdmin } from "@/lib/supabase";
-import { fmtCurrency, fmtDate, fmtMonth, currentMonthRange, currentMonth } from "@/lib/formatters";
+import { fmtCurrency, fmtDate, fmtMonth, resolveRange, monthFromDate } from "@/lib/formatters";
 import { DataTable } from "@/components/data-table";
 import { StatCard } from "@/components/stat-card";
+import { DateFilter } from "@/components/date-filter";
 
 export const dynamic = "force-dynamic";
 
-export default async function CashflowPage() {
+export default async function CashflowPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string; to?: string }>;
+}) {
+  const params = await searchParams;
+  const { start, end, isFiltered } = resolveRange(params);
   const sb = createSupabaseAdmin();
-  const { start, end } = currentMonthRange();
 
   const { data: cashflow } = await sb
     .from("fresco_cashflow")
@@ -28,8 +35,8 @@ export default async function CashflowPage() {
 
   const categoryLabels: Record<string, string> = {
     venta: "Venta",
-    inversion: "Inversión",
-    prestamo: "Préstamo",
+    inversion: "Inversion",
+    prestamo: "Prestamo",
     costo_insumo: "Insumos",
     gasto_fijo: "Gasto fijo",
     retiro_socios: "Retiro socios",
@@ -37,20 +44,28 @@ export default async function CashflowPage() {
     otro: "Otro",
   };
 
+  const rangeLabel = isFiltered
+    ? `${fmtDate(start)} — ${fmtDate(end)}`
+    : fmtMonth(monthFromDate(start));
+
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="font-display text-2xl md:text-3xl font-bold text-bark">
           Cashflow
         </h1>
-        <p className="text-sm text-bark-light mt-1">{fmtMonth(currentMonth())}</p>
+        <p className="text-sm text-bark-light mt-1">{rangeLabel}</p>
       </div>
+
+      <Suspense fallback={null}>
+        <DateFilter />
+      </Suspense>
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <StatCard title="Ingresos" value={fmtCurrency(ingresos)} icon="📈" accent />
         <StatCard title="Egresos" value={fmtCurrency(egresos)} icon="📉" />
         <StatCard
-          title="Neto del mes"
+          title={isFiltered ? "Neto" : "Neto del mes"}
           value={fmtCurrency(neto)}
           icon={neto >= 0 ? "✅" : "⚠️"}
           accent
@@ -65,11 +80,11 @@ export default async function CashflowPage() {
             { key: "concept", label: "Concepto" },
             { key: "amount", label: "Monto", align: "right" },
             { key: "payment_method", label: "Medio" },
-            { key: "category", label: "Categoría" },
+            { key: "category", label: "Categoria" },
           ]}
           data={rows}
           emptyMessage="Sin movimientos"
-          emptyDescription="Cargá ingresos y egresos en la hoja CASHFLOW del Sheet."
+          emptyDescription="Carga ingresos y egresos en la hoja CASHFLOW del Sheet."
           renderCell={(key, value) => {
             if (key === "date") return fmtDate(value as string);
             if (key === "amount") return fmtCurrency(value as number);
