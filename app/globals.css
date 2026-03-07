@@ -10,6 +10,7 @@
   --color-green-700: #15803d;
   --color-green-800: #166534;
   --color-green-900: #14532d;
+  --color-orange-100: #ffedd5;
   --color-orange-400: #fb923c;
   --color-orange-500: #f97316;
   --color-orange-600: #ea580c;
@@ -29,4 +30,17 @@ body {
   background: var(--color-cream);
   color: var(--color-bark);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Reusable component classes (Saasify pattern) */
+@layer components {
+  .tag {
+    @apply inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full;
+  }
+  .section-title {
+    @apply font-display text-3xl md:text-5xl font-bold tracking-tight;
+  }
+  .section-description {
+    @apply text-bark-light text-lg max-w-2xl mx-auto;
+  }
 }

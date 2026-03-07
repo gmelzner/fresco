@@ -16,11 +16,11 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "FRESCO — Viandas saludables en Corrientes",
   description:
-    "La marca de alimentación saludable que Corrientes necesita. Viandas frescas, tech-enabled, con info nutricional real y operación lista para escalar.",
+    "Viandas frescas con ingredientes reales, info nutricional verificada y delivery en el día. Wraps, bowls y sándwiches saludables en Corrientes.",
   openGraph: {
-    title: "FRESCO — La oportunidad en viandas saludables",
+    title: "FRESCO — Comé bien, sin complicarte",
     description:
-      "Inversión baja, margen alto, mercado desatendido. Viandas saludables con tecnología y operación escalable en Corrientes.",
+      "Viandas saludables con delivery en el día en Corrientes. Ingredientes frescos, info nutricional real, desde $4.500.",
     type: "website",
     locale: "es_AR",
   },
