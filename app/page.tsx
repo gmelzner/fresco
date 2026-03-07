@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 /* ─── DATA ─── */
 
 const WHATSAPP_URL =
-  "https://wa.me/5493794XXXXXX?text=Hola!%20Quiero%20pedir%20viandas%20FRESCO";
+  "https://wa.me/5493795134721?text=Hola!%20Quiero%20pedir%20viandas%20FRESCO";
 
 const products = [
   {

@@ -74,4 +74,4 @@ npm run dev
 - [ ] Configurar nginx en VPS para el dominio
 - [ ] Definir si bot Telegram queda en SB o se mueve
 - [ ] Contratar Pedisy
-- [ ] WhatsApp: reemplazar placeholder 5493794XXXXXX por número real
+- [x] WhatsApp: 5493795134721 (business account)
