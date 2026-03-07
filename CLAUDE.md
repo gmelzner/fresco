@@ -18,7 +18,10 @@ Startup de viandas saludables en Corrientes, Argentina. 3 socios: Gus (tech), Al
   - **DNS**: Cloudflare (zone ID: `c65aedf6ec20b4123f0c6ac9dd705dc7`)
   - **Nameservers**: `magdalena.ns.cloudflare.com`, `sergi.ns.cloudflare.com`
   - **Registros**: A `@` → 195.200.2.184 (proxied), A `www` → 195.200.2.184 (proxied)
-- **Hosting**: VPS (195.200.2.184) — nginx + pm2 (`fresco-web`, puerto 3002)
+- **Hosting**: VPS (195.200.2.184) — Traefik (reverse proxy) + pm2 (`fresco-web`, puerto 3006)
+  - **SSL**: Cloudflare proxy (client-facing) + Let's Encrypt via Traefik (origin)
+  - **Traefik config**: `/etc/easypanel/traefik/config/fresco.yaml`
+  - **UFW rule**: `3006 ALLOW 172.18.0.0/16` (Traefik → Fresco)
 - **Pedidos**: Pedisy Esencial (externo, $30K/mes)
 - **Google Sheet**: [Centro de control - Fresco Finanzas](https://docs.google.com/spreadsheets/d/1_lrDJDvw_7OlpYfX1MKDW4GRnO-BK63GG5KFXveL8k0/edit) — 7 hojas (Ventas, Costos, Gastos Fijos, Stock, Recetas, Cashflow, Resumen)
 - **Automatización**: n8n (compartido en VPS, carpeta FRESCO)
@@ -71,9 +74,17 @@ ssh root@195.200.2.184 "cd /root/fresco/app && git pull && npm ci --production &
 **VPS paths:**
 - App: `/root/fresco/app/`
 - Env: `/root/fresco/app/.env.local`
-- Scripts: `/root/fresco/deploy.sh`, `/root/fresco/activate-ssl.sh`
-- Nginx: `/etc/nginx/sites-enabled/fresco`
-- PM2: `fresco-web` (puerto 3002)
+- Scripts: `/root/fresco/deploy.sh`
+- Traefik: `/etc/easypanel/traefik/config/fresco.yaml`
+- Nginx: `/etc/nginx/sites-enabled/fresco` (legacy, no se usa — Traefik es el reverse proxy real)
+- PM2: `fresco-web` (puerto 3006)
+
+**IMPORTANTE — Arquitectura VPS:**
+Traefik (Docker/Easypanel) controla puertos 80/443, NO nginx.
+Nginx escucha en 8098 (solo para atlas-demos). Para agregar un nuevo servicio:
+1. Crear config en `/etc/easypanel/traefik/config/`
+2. Apuntar service a `http://172.18.0.1:PUERTO`
+3. Agregar regla UFW: `ufw allow from 172.18.0.0/16 to any port PUERTO`
 
 ## Auth
 
@@ -116,13 +127,13 @@ npm run dev
 
 - [x] Crear proyecto Supabase y agregar credenciales acá (hstyfmcbqtxnnegabgwz)
 - [x] Definir dominio con socios (comamosfresco.ar)
-- [x] Configurar nginx en VPS para el dominio
-- [x] Deploy en VPS con pm2
+- [x] Configurar Traefik en VPS para el dominio (fresco.yaml + UFW)
+- [x] Deploy en VPS con pm2 (puerto 3006)
 - [x] Dashboard admin (auth + 6 páginas)
 - [x] 6 workflows n8n para sync Sheet → Supabase
 - [x] WhatsApp: 5493795134721 (business account)
 - [x] Organizar workflows n8n en carpetas (NGRO + FRESCO)
-- [ ] Activar SSL — `ssh root@195.200.2.184 "bash /root/fresco/activate-ssl.sh"` (verificar antes: `dig comamosfresco.ar +short` debe devolver `195.200.2.184`)
+- [x] SSL activo (Cloudflare proxy + Let's Encrypt via Traefik)
 - [ ] Activar workflows n8n cuando haya datos en el Sheet (desde UI n8n, toggle cada workflow)
 - [ ] Definir si bot Telegram queda en SB o se mueve
 - [ ] Contratar Pedisy
