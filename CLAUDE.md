@@ -121,8 +121,8 @@ npm run dev
 - [x] Dashboard admin (auth + 6 páginas)
 - [x] 6 workflows n8n para sync Sheet → Supabase
 - [x] WhatsApp: 5493795134721 (business account)
-- [ ] Activar SSL (correr `/root/fresco/activate-ssl.sh` cuando DNS propague)
-- [ ] Activar workflows n8n cuando haya datos en el Sheet
-- [ ] Organizar workflows NGRO en carpeta separada en n8n UI
+- [x] Organizar workflows n8n en carpetas (NGRO + FRESCO)
+- [ ] Activar SSL — `ssh root@195.200.2.184 "bash /root/fresco/activate-ssl.sh"` (verificar antes: `dig comamosfresco.ar +short` debe devolver `195.200.2.184`)
+- [ ] Activar workflows n8n cuando haya datos en el Sheet (desde UI n8n, toggle cada workflow)
 - [ ] Definir si bot Telegram queda en SB o se mueve
 - [ ] Contratar Pedisy
