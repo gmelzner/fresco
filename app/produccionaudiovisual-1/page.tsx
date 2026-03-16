@@ -247,6 +247,49 @@ export default function ProduccionAudiovisual1() {
 
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-16">
 
+        {/* ── PREGUNTA DE APERTURA ── */}
+        <section>
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-bark mb-3 tracking-tight">
+            Pregunta de apertura
+          </h2>
+          <p className="text-bark-light mb-6">
+            Antes de arrancar el quiz, se hace esta pregunta a cada persona. Se filma desde atras de camara
+            (solo se ve al entrevistado). Sirve como intro del video y conecta con el problema que FRESCO resuelve.
+          </p>
+          <div className="bg-white rounded-2xl border-2 border-green-200 p-8">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-xs font-bold uppercase tracking-widest text-green-700 bg-green-100 px-3 py-1 rounded-full">
+                Intro — antes del quiz
+              </span>
+            </div>
+            <p className="font-display text-xl md:text-2xl font-bold text-bark mb-6">
+              &ldquo;¿Que es lo que menos te gusta de la vida fit o saludable?&rdquo;
+            </p>
+            <div className="mb-5">
+              <span className="text-xs font-bold uppercase tracking-wider text-bark-light">Respuestas tipicas que van a salir:</span>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {[
+                { icon: "🤯", text: "Pensar siempre en que comer" },
+                { icon: "😩", text: "Siempre como igual, ya me aburre" },
+                { icon: "⏰", text: "Planificar las comidas todos los dias" },
+              ].map((r, i) => (
+                <div key={i} className="bg-cream rounded-xl px-4 py-3 text-center">
+                  <span className="text-2xl block mb-1">{r.icon}</span>
+                  <span className="text-sm font-medium text-bark">{r.text}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 bg-green-50 rounded-xl px-5 py-4">
+              <p className="text-sm text-bark-light">
+                <span className="font-bold text-green-700">¿Por que esta pregunta?</span> Todas las respuestas apuntan al mismo dolor:
+                pensar, planificar y cocinar sano es un embole. Eso es exactamente lo que FRESCO resuelve.
+                No hace falta decirlo — el espectador lo conecta solo.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ── MECANICA ── */}
         <section>
           <h2 className="font-display text-2xl md:text-3xl font-bold text-bark mb-8 tracking-tight">
@@ -291,12 +334,13 @@ export default function ProduccionAudiovisual1() {
           </h2>
           <div className="bg-white rounded-2xl border border-green-100 overflow-hidden">
             {[
-              { time: "0–2 seg", label: "INTRO", desc: "\"3 preguntas, 3 bien, te ganas un premio\"", highlight: true },
-              { time: "3–12 seg", label: "PREGUNTA 1", desc: "La mas facil. Para enganchar y generar confianza.", highlight: false },
-              { time: "13–25 seg", label: "PREGUNTA 2", desc: "Nivel medio. Aca empiezan las sorpresas.", highlight: false },
-              { time: "25–40 seg", label: "PREGUNTA 3", desc: "La trampa o el dato WTF. El momento clave del video.", highlight: false },
-              { time: "40–50 seg", label: "RESULTADO", desc: "Gana: entrega del premio + reaccion. Pierde: remate comico.", highlight: true },
-              { time: "50–55 seg", label: "CIERRE", desc: "\"Come sano, come FRESCO\" + logo.", highlight: true },
+              { time: "0–5 seg", label: "APERTURA", desc: "\"¿Que es lo que menos te gusta de la vida fit?\" — respuesta del entrevistado (detras de camara).", highlight: true },
+              { time: "5–8 seg", label: "INTRO QUIZ", desc: "\"3 preguntas, 3 bien, te ganas un premio\"", highlight: false },
+              { time: "8–18 seg", label: "PREGUNTA 1", desc: "La mas facil. Para enganchar y generar confianza.", highlight: false },
+              { time: "18–30 seg", label: "PREGUNTA 2", desc: "Nivel medio. Aca empiezan las sorpresas.", highlight: false },
+              { time: "30–45 seg", label: "PREGUNTA 3", desc: "La trampa o el dato WTF. El momento clave del video.", highlight: false },
+              { time: "45–55 seg", label: "RESULTADO", desc: "Gana: entrega del premio + reaccion. Pierde: remate comico.", highlight: true },
+              { time: "55–60 seg", label: "CIERRE", desc: "\"Come sano, come FRESCO\" + logo.", highlight: true },
             ].map((row, i) => (
               <div
                 key={i}
